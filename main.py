@@ -22,7 +22,7 @@ class Connect4:
                 print('|', self.board[i][j], end='')
             print('|' + '\n' + '-' * 3 * self.width)
 
-    def take_player(self, player_turn):
+    def take_move(self, player_turn):
         turn_not_ended = True
         while turn_not_ended:
             print("Select column to drop")
@@ -49,7 +49,7 @@ class Connect4:
             else:
                 print('Make sure you entered number from 1 to ' + str(self.width))
 
-    def winning_move(self, color):
+    def is_winning_move(self, color):
         color = f'{self.players_colors[color]}*{Style.RESET_ALL}'
         for i in range(self.width - 3):
             for j in range(self.height):
@@ -72,21 +72,21 @@ class Connect4:
                         and self.board[j - 2][i + 2] == color and self.board[j - 3][i + 3] == color:
                     return True
 
-    def game_on(self):
-        run_game = True
+    def run_game(self):
+        run = True
 
         current_player = 0
-        while run_game:
+        while run:
             self.draw_board()
             print('Players ' + self.players[current_player] + ' turn')
-            self.take_player(self.players[current_player])
-            if self.winning_move(self.players[current_player]):
+            self.take_move(self.players[current_player])
+            if self.is_winning_move(self.players[current_player]):
                 self.draw_board()
                 print('Player ' + self.players[current_player] + ' has won, congratulations!')
-                run_game = False
+                run = False
             else:
                 current_player = (current_player + 1) % len(self.players)
 
 
 game = Connect4()
-game.game_on()
+game.run_game()
